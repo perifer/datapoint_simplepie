@@ -1,0 +1,6 @@
+name = "SimplePie Parser"
+version = "6.x-0.1"
+core = "6.x"
+description = "Module that consumes any type of feed supported by SimplePie"
+dependencies[] = datapoint
+package = Datapoint

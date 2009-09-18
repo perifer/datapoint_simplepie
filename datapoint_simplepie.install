@@ -1,0 +1,15 @@
+<?php
+module_load_include('inc', 'datapoint', 'datapoint.vertex-install');
+
+function datapoint_simplepie_schema() {
+  $schema = datapoint_vertex_module_schema('datapoint_simplepie');
+  return $schema;
+}
+
+function datapoint_simplepie_install() {
+  drupal_install_schema('datapoint_simplepie');
+}
+
+function datapoint_simplepie_uninstall() {
+  drupal_uninstall_schema('datapoint_simplepie');
+}
