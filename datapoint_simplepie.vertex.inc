@@ -38,6 +38,13 @@ function datapoint_simplepie_vertex_schema() {
         'not null'    => TRUE,
         'default'     => '',
       ),
+      'position' => array(
+        'description' => t('The position of the item'),
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => FALSE,
+        'default' => '',
+      ),
     ),
   );
 }

@@ -13,3 +13,12 @@ function datapoint_simplepie_install() {
 function datapoint_simplepie_uninstall() {
   drupal_uninstall_schema('datapoint_simplepie');
 }
+
+function datapoint_simplepie_update_6001() {
+  $ret = array();
+  $schema = datapoint_vertex_module_schema('datapoint_simplepie');
+  $table = key($schema);
+  db_add_field(&$ret, $table, 'position', $schema[$table]['fields']['position']);
+
+  return $ret;
+}

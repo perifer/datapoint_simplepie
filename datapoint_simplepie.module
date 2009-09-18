@@ -193,7 +193,6 @@ function _datapoint_simplepie_grab_and_add($feedurl, &$result, $iterator = NULL,
   foreach ($parsed->items as $item) {
     //Create/get result objects
     $point = $result->point(md5($item->options->guid));
-    $point->setHasNodes(FALSE);
     $vertex = new DatapointVertex($item->options->timestamp);
 
     //If the point was created now it needs to get a name
@@ -210,6 +209,11 @@ function _datapoint_simplepie_grab_and_add($feedurl, &$result, $iterator = NULL,
     $vertex->value('published',  $item->options->timestamp);
     $vertex->value('iterator',   $iterator);
     $vertex->value('statevalue', $statevalue);
+
+    // GeoRSS
+    if (!empty($item->position)) {
+      $vertex->value('position', $item->position);
+    }
 
     $point->addVertex($vertex);
   }
@@ -270,6 +274,10 @@ function _datapoint_simplepie_parse($url, $force_refresh = FALSE) {
     $curr_item->options->tags = $tags;
     // Stick the raw data onto the feed item.
     $curr_item->options->raw = $simplepie_item->data;
+    // GeoRSS
+    if ($lat = $simplepie_item->get_latitude()) {
+      $curr_item->position = $lat . ' ' . $simplepie_item->get_longitude();
+    }
     $parsed_source->items[] = $curr_item;
   }
   return $parsed_source;
