@@ -346,3 +346,21 @@ function datapoint_simplepie_views_api() {
     'path' => drupal_get_path('module', 'datapoint_simplepie') . '/includes',
   );
 }
+
+/**
+ * Prepare raw data to be a title
+ * Straight copy of datapoint _parser_simplepie_title() from parser.simplepie.module.
+ */
+function _datapoint_simplepie_title($title, $body = FALSE) {
+    if (empty($title) && !empty($body)) {
+    // Explode to words and use the first 3 words.
+    $words = preg_split("/[\s,]+/", $body);
+    $title = $words[0] .' '. $words[1] .' '. $words[2];
+  }
+  if (version_compare(PHP_VERSION, '5.0.0', '<')) {
+    return html_entity_decode(strip_tags($title), ENT_QUOTES);
+  }
+  else {
+    return html_entity_decode(strip_tags($title), ENT_QUOTES, 'UTF-8');
+  }
+}
